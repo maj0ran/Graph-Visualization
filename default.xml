@@ -1,0 +1,35 @@
+<graph weighted="false" directed="false" multigraph="false" type="String" size="5">
+	<!-- list of nodes -->
+	<node id="0">
+		<element>
+			A
+		</element>
+	</node>
+	<node id="1">
+		<element>
+			B
+		</element>
+	</node>
+	<node id="2">
+		<element>
+			C
+		</element>
+	</node>
+	<node id="3">
+		<element>
+			D
+		</element>
+	</node>
+	<node id="4">
+		<element>
+			E
+		</element>
+	</node>	
+
+	<!-- list of links -->
+	<link src="0" dest="1" w="0"></link>
+	<link src="1" dest="0" w="0"></link>
+	<link src="0" dest="3" w="0"></link>
+	<link src="2" dest="1" w="0"></link>
+
+</graph>

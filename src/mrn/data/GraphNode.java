@@ -10,6 +10,18 @@ public class GraphNode<T> {
 
         public GraphNode() {}
 
+        public GraphNode(T elem) {
+            this.element = elem;
+        }
+
+        public GraphNode(GraphNode<T> copy) {
+            this.element = copy.element;
+            this.links = new ArrayList<>();
+            for(GraphLink l : copy.getLinks()) {
+             //   this.links.add()
+            }
+        }
+
         public void setElement(T e) {
             this.element = e;
         }

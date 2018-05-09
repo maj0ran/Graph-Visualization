@@ -4,6 +4,8 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+import mrn.data.Graph;
+import mrn.data.GraphNode;
 import mrn.data.Model;
 import mrn.ui.base.Controller;
 
@@ -22,8 +24,10 @@ public class ControllerMenubar extends Controller<Model, ViewMenubar> {
     }
 
     public void pressLoad(Event e) {
-        this.model.loadGraph("D:\\Code\\Java\\Graph\\default.xml");
+        this.model.loadGraph("default.xml");
         change.firePropertyChange("Graph", null, null);
+        GraphNode<String> n = model.getGraph().getNodes().get(0);
+        model.getGraph().depthFirstSearch(n);
     }
 
     @Override

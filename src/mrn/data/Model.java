@@ -7,8 +7,7 @@ import java.io.IOException;
 
 public class Model {
 
-    private int value = 0;
-    private Graph graph;
+    private Graph<String> graph;
     private GraphBuilder graphFactory;
 
     public Model() {
@@ -30,23 +29,7 @@ public class Model {
         }
     }
 
-    public Graph getGraph() {
+    public Graph<String> getGraph() {
         return this.graph;
-    }
-
-    public int getValue() {
-        return this.value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public void incValue() {
-        this.value++;
-    }
-
-    public void decValue() {
-        this.value--;
     }
 }

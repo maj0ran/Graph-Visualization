@@ -16,6 +16,7 @@ public class JfxUi {
         /* Init your model(s) */
         Model data = new Model();
 
+
         /* Init a window */
         Window<GridPane> mainwindow = new Window<>(mainstage);
         mainwindow.setLayout(new GridPane());

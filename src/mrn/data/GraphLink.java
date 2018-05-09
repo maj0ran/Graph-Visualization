@@ -2,7 +2,7 @@ package mrn.data;
 
 public class GraphLink {
 
-    static int id_counter = 0;
+    private static int id_counter = 0;
 
     private int id;
     private GraphNode dest;
@@ -12,6 +12,12 @@ public class GraphLink {
         this.dest = dest;
         this.weight = weight;
         this.id = id_counter++;
+    }
+
+    public GraphLink(GraphLink copy) {
+        this.id = copy.id;
+        this.dest = copy.dest;
+        this.weight = copy.weight;
     }
 
     public GraphLink copy() {

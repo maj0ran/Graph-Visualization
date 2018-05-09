@@ -1,4 +1,4 @@
-<graph weighted="false" directed="false" multigraph="false" type="String" size="5">
+<graph weighted="false" directed="true" multigraph="false" type="String" size="5">
 	<!-- list of nodes -->
 	<node id="0">
 		<element>
@@ -24,12 +24,37 @@
 		<element>
 			E
 		</element>
-	</node>	
+	</node>
+	<node id="5">
+		<element>
+			F
+		</element>
+	</node>
+	<node id="6">
+		<element>
+			G
+		</element>
+	</node>
+	<node id="7">
+		<element>
+			H
+		</element>
+	</node>
 
 	<!-- list of links -->
-	<link src="0" dest="1" w="0"></link>
-	<link src="1" dest="0" w="0"></link>
 	<link src="0" dest="3" w="0"></link>
-	<link src="2" dest="1" w="0"></link>
+	<link src="0" dest="5" w="0"></link>
+	<link src="0" dest="7" w="0"></link>
+	<link src="1" dest="6" w="0"></link>
+	<link src="1" dest="2" w="0"></link>
+	<link src="2" dest="4" w="0"></link>
+	<link src="2" dest="7" w="0"></link>
+	<link src="3" dest="6" w="0"></link>
+	<link src="5" dest="4" w="0"></link>
+	<link src="5" dest="3" w="0"></link>
+	<link src="6" dest="2" w="0"></link>
+	<link src="7" dest="1" w="0"></link>
+	<link src="7" dest="5" w="0"></link>
+
 
 </graph>

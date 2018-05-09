@@ -1,7 +1,11 @@
 package mrn.data;
 
-import java.util.ArrayList;
-import java.util.Vector;
+import java.util.*;
+import java.util.function.Function;
+
+import static mrn.data.NodeColor.BLACK;
+import static mrn.data.NodeColor.GRAY;
+import static mrn.data.NodeColor.WHITE;
 
 enum LinkStatus { Success, AlreadyLinked, FirstNotFound, LastNotFound, BothNotFound }
 
@@ -40,14 +44,14 @@ public final class Graph<T>  {
         return edgesCount;
     }
 
-    public boolean add(T e) {
+    public GraphNode<T> add(T e) {
         if(searchNode(e) == null) {
             GraphNode<T> n = new GraphNode<>();
             n.setElement(e);
             this.nodes.add(n);
-            return true;
+            return n;
         }
-        return false;
+        return null;
     }
 
     public boolean change(T oldVal, T newVal) {
@@ -108,6 +112,53 @@ public final class Graph<T>  {
         if (n != null) {
             return n.getLinks();
         }
+        return null;
+    }
+
+    /**
+     * ---WIP---
+     * Depth-First-Search on the graph which returns the spanning tree from the selected node
+     * @param src The starting node where the algorithm begins
+     */
+    public Graph<T> depthFirstSearch(GraphNode<T> src) {
+        if(!this.nodes.contains(src)) {
+            return null;
+        }
+
+        //init
+
+        Graph<T> spanningTree = new Graph<>(this.weighted, this.directed, this.multigraph);
+
+        Map<GraphNode<T>, NodeColor> color = new HashMap<>();
+        Map<GraphNode<T>, GraphNode<T>> parent = new HashMap<>();
+        Map<GraphNode<T>, GraphNode<T>> copy = new HashMap<>();
+        for(GraphNode<T> n : this.nodes) {
+            color.put(n, WHITE);
+            parent.put(n, null);
+
+        }
+        Stack<GraphNode<T>> stack = new Stack<>();
+        GraphNode<T> curr;
+
+        // Actual DFS
+        color.put(src, GRAY);
+        stack.push(src);
+        while(!stack.isEmpty()) {
+            curr = stack.pop();
+            copy.put(new GraphNode<>(curr.getElement()), curr);
+            spanningTree.getNodes().add()
+            for(GraphLink l : curr.getLinks()) {
+                if(color.get(l.getDest()) == WHITE) {
+                    GraphNode<T> next = l.getDest();
+                    parent.put(next, curr);
+                    color.put(next, GRAY);
+                    stack.push(next);
+                }
+            }
+        }
+
+
+
         return null;
     }
 

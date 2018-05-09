@@ -13,13 +13,16 @@ public class ControllerGraphVisual extends Controller<Model, ViewGraphVisual> {
 
     @Override
     protected void init(Model model, ViewGraphVisual view) {
+        view.getRoot().setOnMouseClicked(e -> {
+            System.out.println(e.getX() + " " + e.getY());
 
+        });
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if(evt.getPropertyName().equals("Graph")) {
-          view.update();
+          view.drawGraph();
         }
     }
 }

@@ -1,6 +1,5 @@
 import javafx.application.Application;
 import javafx.stage.Stage;
-import mrn.data.DataStructure;
 import mrn.data.Graph;
 import mrn.data.GraphXmlHandler;
 import mrn.ui.JfxUi;

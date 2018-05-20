@@ -1,6 +1,5 @@
 package mrn.ui.controlbar;
 
-import javafx.event.EventType;
 import javafx.scene.input.MouseEvent;
 import mrn.data.Model;
 import mrn.ui.base.Controller;
@@ -15,8 +14,12 @@ public class ControllerControlBar extends Controller<Model, ViewControlBar> {
 
     @Override
     public void init(Model model, ViewControlBar view) {
-        this.view.start.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
-            System.out.println("start");
+        this.view.btnStart.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            model.getGraph().depthFirstSearch(null);
+        });
+
+        this.view.btnSelectStartNode.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+            change.firePropertyChange("start_select", !this.view.btnSelectStartNode.isSelected(), this.view.btnSelectStartNode.isSelected());
         });
     }
 

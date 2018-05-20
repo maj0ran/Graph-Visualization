@@ -27,7 +27,7 @@ public class ControllerMenubar extends Controller<Model, ViewMenubar> {
         this.model.loadGraph("default.xml");
         change.firePropertyChange("Graph", null, null);
         GraphNode<String> n = model.getGraph().getNodes().get(0);
-        model.getGraph().depthFirstSearch(n);
+        Graph<String> dfs = model.getGraph().depthFirstSearch(n);
     }
 
     @Override

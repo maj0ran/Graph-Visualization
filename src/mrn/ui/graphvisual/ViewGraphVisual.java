@@ -111,7 +111,7 @@ public class ViewGraphVisual extends View<Model> {
         }
     }
 
-    public void selectNode() {
-
+    public FxGraph<String> getFxGraph() {
+        return fxGraph;
     }
 }

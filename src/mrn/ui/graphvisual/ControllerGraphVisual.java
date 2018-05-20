@@ -1,5 +1,6 @@
 package mrn.ui.graphvisual;
 
+import javafx.scene.input.MouseEvent;
 import mrn.data.Model;
 import mrn.ui.base.Controller;
 
@@ -13,10 +14,17 @@ public class ControllerGraphVisual extends Controller<Model, ViewGraphVisual> {
 
     @Override
     protected void init(Model model, ViewGraphVisual view) {
-        view.getRoot().setOnMouseClicked(e -> {
-            System.out.println(e.getX() + " " + e.getY());
+        view.getRoot().setOnMouseClicked(this::selectNode);
 
-        });
+    }
+
+    private void selectNode(MouseEvent e) {
+        double x = e.getX();
+        double y = e.getY();
+
+        for( FxNode<String>  node: view.getFxGraph().fxnodes) {
+            if(x > )
+        }
     }
 
     @Override

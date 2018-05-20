@@ -1,7 +1,8 @@
 package mrn.data;
 
+import javafx.util.Pair;
+
 import java.util.*;
-import java.util.function.Function;
 
 import static mrn.data.NodeColor.BLACK;
 import static mrn.data.NodeColor.GRAY;
@@ -10,6 +11,9 @@ import static mrn.data.NodeColor.WHITE;
 enum LinkStatus { Success, AlreadyLinked, FirstNotFound, LastNotFound, BothNotFound }
 
 public final class Graph<T>  {
+
+    public LinkedHashMap<GraphNode<T>, GraphNode<T>> dfsLog;
+
 
     private ArrayList<GraphNode<T>> nodes = new ArrayList<>();
     private boolean weighted = false;
@@ -92,7 +96,7 @@ public final class Graph<T>  {
         if (!nodes.contains(n2)) { return LinkStatus.LastNotFound; }
 
         if(!multigraph) {
-            if(n1.hasLink(n2)) {
+            if(n1.getLink(n2) != null) {
                 return LinkStatus.AlreadyLinked;
             }
         }
@@ -125,28 +129,35 @@ public final class Graph<T>  {
             return null;
         }
 
+        dfsLog = new LinkedHashMap<>();
+
         //init
-
-        Graph<T> spanningTree = new Graph<>(this.weighted, this.directed, this.multigraph);
-
         Map<GraphNode<T>, NodeColor> color = new HashMap<>();
         Map<GraphNode<T>, GraphNode<T>> parent = new HashMap<>();
-        Map<GraphNode<T>, GraphNode<T>> copy = new HashMap<>();
+
         for(GraphNode<T> n : this.nodes) {
             color.put(n, WHITE);
-            parent.put(n, null);
-
         }
         Stack<GraphNode<T>> stack = new Stack<>();
         GraphNode<T> curr;
 
         // Actual DFS
-        color.put(src, GRAY);
         stack.push(src);
+        color.put(src, GRAY);
+
         while(!stack.isEmpty()) {
             curr = stack.pop();
-            copy.put(new GraphNode<>(curr.getElement()), curr);
-            spanningTree.getNodes().add()
+
+          //  String p =
+            if(parent.get(curr) == null) {
+                dfsLog.put(curr, null);
+            }
+            else {
+                dfsLog.put(curr, parent.get(curr));
+            }
+           // System.out.println(curr.getElement() + " <- " + (parent.get(curr) != null ? parent.get(curr).getElement().toString() : "null"));
+            color.put(curr, BLACK);
+
             for(GraphLink l : curr.getLinks()) {
                 if(color.get(l.getDest()) == WHITE) {
                     GraphNode<T> next = l.getDest();
@@ -157,9 +168,43 @@ public final class Graph<T>  {
             }
         }
 
+        for(GraphNode<T> p : dfsLog.keySet())
+            System.out.println(p.getElement() + "<-" + ( dfsLog.get(p) != null ? dfsLog.get(p).getElement() : "null"));
+
+        // Now Construct the new Tree from the parent-table
+        Graph<T> spanningTree = new Graph<>(this.weighted, this.directed, this.multigraph);
+        LinkedHashMap<GraphNode<T>, GraphNode<T>> spanningTreeNodes = new LinkedHashMap<>();
 
 
-        return null;
+        LinkedHashMap<GraphNode<T>, GraphNode<T>> nodeRef = new LinkedHashMap<>();         // n -> n'
+        for(GraphNode<T> originalChild : dfsLog.keySet()) {
+            GraphNode<T> spanTreeChild = new GraphNode<>(originalChild.getElement());
+            nodeRef.put(originalChild, spanTreeChild);
+
+            GraphNode<T> originalParent = dfsLog.get(originalChild);         // p -> p'
+            GraphNode<T> spanTreeParent = null;
+            if(originalParent != null) {
+                    spanTreeParent = nodeRef.get(originalParent);
+            }
+
+            spanningTreeNodes.put(spanTreeChild, spanTreeParent);
+        }
+
+        for(GraphNode<T> n : spanningTreeNodes.keySet()) {
+            spanningTree.getNodes().add(n);
+            if(spanningTreeNodes.get(n) != null) {
+                 spanningTree.link(spanningTreeNodes.get(n), n);
+            }
+            System.out.println(n.getElement() +  " <- " + (spanningTreeNodes.get(n) != null ? spanningTreeNodes.get(n).getElement() : "null"));
+        }
+
+        for(GraphNode<T> p : spanningTreeNodes.values()) {
+
+        }
+
+
+        System.out.println(spanningTree);
+        return spanningTree;
     }
 
 

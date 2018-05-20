@@ -34,13 +34,13 @@ public class GraphNode<T> {
             return this.links;
         }
 
-        public boolean hasLink(GraphNode dest) {
+        public GraphLink getLink(GraphNode dest) {
             for(GraphLink l : links) {
                 if(l.getDest() == dest) {
-                    return true;
+                    return l;
                 }
             }
-            return false;
+            return null;
         }
 
     }

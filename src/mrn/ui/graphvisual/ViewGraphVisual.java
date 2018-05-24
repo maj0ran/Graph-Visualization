@@ -22,7 +22,7 @@ public class ViewGraphVisual extends View<Model> {
 
 
     private FxGraph<String> fxGraph;
-    private Canvas canvas;
+    public Canvas canvas;
     public GraphicsContext gc;
 
     public ViewGraphVisual(Model model) {
@@ -34,13 +34,17 @@ public class ViewGraphVisual extends View<Model> {
     protected void init() {
         this.canvas = new Canvas(600, 600);
         gc = canvas.getGraphicsContext2D();
+
+    }
+
+    public void initGraph(Graph<String> g) {
+        fxGraph = new FxGraph<>(g);
     }
 
 
     private void projectGraph() {
-        Graph<String> graph = model.getGraph();
 
-        final int nodeCount = graph.getNumberNodes();
+        final int nodeCount = model.getGraph().getNumberNodes();
 
         final double areaWidth = canvas.getWidth();
 
@@ -55,47 +59,11 @@ public class ViewGraphVisual extends View<Model> {
 
         final double nodeSize = 50;
 
-        // DEBUG
-        gc.strokeRect(1, 1, canvas.getWidth() - 1, canvas.getHeight() - 1);
-
-        fxGraph = new FxGraph<>(graph);
-
         /* Nodes */
         for (int i = 0; i < nodeCount; i++) {
             fxGraph.fxnodes.get(i).x = c.getX() + Math.cos(nodeGap * i) * r;
             fxGraph.fxnodes.get(i).y = c.getY() + Math.sin(nodeGap * i) * r;
             fxGraph.fxnodes.get(i).size = nodeSize;
-        }
-
-        /* Edges */
-        for(FxNode<String> n : fxGraph.fxnodes) {
-            for(GraphLink l : n.real.getLinks()) {
-
-                FxNode dest = fxGraph.getFromReal(l.getDest());
-                double dx = n.x - dest.x;
-                double dy = n.y - dest.y;
-                double a = Math.atan2(dy, dx);
-
-                double src_x = n.x - Math.cos(a) * nodeSize  / 2;
-                double src_y = n.y - Math.sin(a) * nodeSize  / 2;
-                double dst_x = dest.x + Math.cos(a) * nodeSize / 2;
-                double dst_y = dest.y + Math.sin(a) * nodeSize / 2;
-                gc.strokeLine(src_x, src_y, dst_x, dst_y);
-                double arrowHead_x[] = new double[] {
-                        dst_x,
-                        dst_x + Math.cos(a + Math.toRadians(30)) * 10,
-                        dst_x + Math.cos(a - Math.toRadians(30)) * 10
-                };
-
-                double arrowHead_y[] = new double[] {
-                        dst_y,
-                        dst_y + Math.sin(a + Math.toRadians(30)) * 10,
-                        dst_y + Math.sin(a - Math.toRadians(30)) * 10
-
-                };
-                gc.fillPolygon(arrowHead_x, arrowHead_y, 3);
-
-            }
         }
     }
 
@@ -104,10 +72,20 @@ public class ViewGraphVisual extends View<Model> {
         return canvas;
     }
 
+    public void clear() {
+        gc.clearRect(0, 0, canvas.getWidth() - 1, canvas.getHeight() - 1);
+    }
+
     public void drawGraph() {
+
+        clear();
+
         projectGraph();
         for(var n : fxGraph.fxnodes) {
             n.draw(gc);
+            for(FxLink l : n.links) {
+                l.draw(gc);
+            }
         }
     }
 

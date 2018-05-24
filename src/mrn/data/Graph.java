@@ -20,6 +20,19 @@ public final class Graph<T>  {
     private boolean directed = false;
     private boolean multigraph = false;
 
+
+    public boolean isWeighted() {
+        return weighted;
+    }
+
+    public boolean isDirected() {
+        return directed;
+    }
+
+    public boolean isMultigraph() {
+        return multigraph;
+    }
+
     public Graph(boolean isWeighted, boolean isDirected, boolean isMultigraph) {
         this.weighted = isWeighted;
         this.directed = isDirected;
@@ -148,14 +161,12 @@ public final class Graph<T>  {
         while(!stack.isEmpty()) {
             curr = stack.pop();
 
-          //  String p =
             if(parent.get(curr) == null) {
                 dfsLog.put(curr, null);
             }
             else {
                 dfsLog.put(curr, parent.get(curr));
             }
-           // System.out.println(curr.getElement() + " <- " + (parent.get(curr) != null ? parent.get(curr).getElement().toString() : "null"));
             color.put(curr, BLACK);
 
             for(GraphLink l : curr.getLinks()) {
@@ -167,9 +178,6 @@ public final class Graph<T>  {
                 }
             }
         }
-
-        for(GraphNode<T> p : dfsLog.keySet())
-            System.out.println(p.getElement() + "<-" + ( dfsLog.get(p) != null ? dfsLog.get(p).getElement() : "null"));
 
         // Now Construct the new Tree from the parent-table
         Graph<T> spanningTree = new Graph<>(this.weighted, this.directed, this.multigraph);
@@ -195,15 +203,12 @@ public final class Graph<T>  {
             if(spanningTreeNodes.get(n) != null) {
                  spanningTree.link(spanningTreeNodes.get(n), n);
             }
-            System.out.println(n.getElement() +  " <- " + (spanningTreeNodes.get(n) != null ? spanningTreeNodes.get(n).getElement() : "null"));
         }
 
         for(GraphNode<T> p : spanningTreeNodes.values()) {
 
         }
 
-
-        System.out.println(spanningTree);
         return spanningTree;
     }
 

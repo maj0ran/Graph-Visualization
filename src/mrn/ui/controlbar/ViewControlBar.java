@@ -1,15 +1,14 @@
 package mrn.ui.controlbar;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import mrn.data.Model;
 import mrn.ui.base.View;
 
 public class ViewControlBar extends View<Model> {
-    public Button btnStart;
+    public Button btnRun;
     public Button btnStep;
-    public ToggleButton btnSelectStartNode;
+    public Button btnReset;
 
     private HBox layout;
 
@@ -24,13 +23,14 @@ public class ViewControlBar extends View<Model> {
     protected void init() {
         layout = new HBox();
 
-        btnSelectStartNode = new ToggleButton("Select Start Node");
-        btnStart = new Button("Start");
+        btnRun = new Button("Run");
         btnStep = new Button("Step");
-        btnStart.setMinWidth(BTN_WIDTH);
+        btnReset = new Button("Reset");
+        btnRun.setMinWidth(BTN_WIDTH);
         btnStep.setMinWidth(BTN_WIDTH);
+        btnReset.setMinWidth(BTN_WIDTH);
 
-        layout.getChildren().addAll(btnSelectStartNode, btnStart, btnStep);
+        layout.getChildren().addAll(btnRun, btnStep, btnReset);
         layout.setSpacing(10);
     }
 

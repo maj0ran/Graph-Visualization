@@ -23,14 +23,17 @@ public class FxGraph<T> {
             this.fxnodes.add(new FxNode<>(n, 0, 0, 0));
         }
 
-        for (GraphNode n : realGraph.getNodes()) {
-            //    for(GraphLink l : n.getLinks()) {
+        for (GraphNode<T> n : realGraph.getNodes()) {
+            FxNode fxn = getFromReal(n);
+            for (GraphLink l : n.getLinks()) {
+                FxLink fxl = new FxLink(this, l);
+                fxn.addLink(fxl);
+            }
 
-            //    }
         }
     }
 
-    public FxNode<T> getFromReal(GraphNode real) {
+    public FxNode<T> getFromReal(GraphNode<T> real) {
         for (FxNode<T> fxn : fxnodes) {
             if (fxn.real == real) {
                 return fxn;

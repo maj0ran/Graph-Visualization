@@ -11,14 +11,11 @@ public class GraphXmlHandler extends DefaultHandler {
     boolean belem;
 
     @Override
-    public void startDocument() {
-        System.out.println("Document Start");
-    }
+    public void startDocument() { }
 
     @Override
     public void endDocument() {
-        System.out.println(g.toString());
-        System.out.println("Document end");
+        System.out.println("Reading File Finished");
     }
 
     @Override
@@ -57,6 +54,7 @@ public class GraphXmlHandler extends DefaultHandler {
             g.getNodes().add(currNode);
         }
     }
+
 
     @Override
     public void characters(char[] ch, int start, int length) {

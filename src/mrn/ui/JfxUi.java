@@ -10,6 +10,7 @@ import mrn.ui.controlbar.ViewControlBar;
 import mrn.ui.graphstatuspanel.ViewGraphStatus;
 import mrn.ui.graphvisual.ViewGraphVisual;
 import mrn.ui.menubar.ViewMenubar;
+import mrn.ui.spantree.ViewSpanTree;
 
 public class JfxUi {
     public JfxUi(Stage mainstage) {
@@ -20,15 +21,15 @@ public class JfxUi {
         /* Init a window */
         Window<GridPane> mainwindow = new Window<>(mainstage);
         mainwindow.setLayout(new GridPane());
-        mainstage.setTitle("Hello JavaFX");
+        mainstage.setTitle("Depth First Search Visualization");
         GridPane wndw_layout = mainwindow.getLayout();
-        wndw_layout.setGridLinesVisible(true);
+        wndw_layout.setGridLinesVisible(false);
         wndw_layout.setHgap(5);
         wndw_layout.setVgap(5);
 
         /* Init Views and add them to the window layout */
         ViewMenubar menu = new ViewMenubar(data);
-        wndw_layout.add(menu.getRoot(), 0, 0, 2, 1);
+        wndw_layout.add(menu.getRoot(), 0, 0, 3, 1);
         menu.getRoot().prefWidthProperty().bind(mainstage.widthProperty());
 
         ViewControlBar ctrlBar = new ViewControlBar(data);
@@ -41,9 +42,11 @@ public class JfxUi {
         ViewGraphVisual graphVisual = new ViewGraphVisual(data);
         wndw_layout.add(graphVisual.getRoot(), 1, 2);
 
+        ViewSpanTree spanTree = new ViewSpanTree(data);
+        wndw_layout.add(spanTree.getRoot(), 2, 2);
 
         /* add the window to the stage */
-        mainwindow.getStage().setScene(new Scene(mainwindow.getLayout(), 640, 480));
+        mainwindow.getStage().setScene(new Scene(mainwindow.getLayout(), 1400, 900));
         mainwindow.getStage().show();
 
     }

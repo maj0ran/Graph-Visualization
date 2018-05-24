@@ -31,6 +31,8 @@ public class ViewGraphStatus extends View<Model> {
         this.layout.add(nodesCountNum, 1, 0);
         this.layout.add(edgesCount, 0, 1);
         this.layout.add(edgesCountNum, 1, 1);
+
+        this.layout.setMinWidth(100);
     }
 
     @Override
